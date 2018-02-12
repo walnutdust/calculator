@@ -17,15 +17,15 @@ const nbuttons = document.querySelectorAll('.nbuttons');
 nbuttons.forEach(function (element){
   element.addEventListener('click', function (e){
     console.log(e);
-    if(operation == 0) {
-      if(!decimal) num1 = num1*10 + parseInt(element.childNodes[0].nodeValue);
-      else num1 = parseFloat(num1.toString() + element.childNodes[0].nodeValue);
+    if(operation == 0 || decimal) {
+      if(!decimal) num2 = num2*10 + parseInt(element.childNodes[0].nodeValue);
+      else num2 = parseFloat(num2.toString() + element.childNodes[0].nodeValue);
 
-      if(flag) num1 /=10;
+      if(flag) num2 /=10;
 
       flag = false;
       console.log(num1);
-      update2("              " +  num1.toString());
+      update2("              " +  num2.toString());
     }
     else {
       num2 = num2* 10 + parseInt(element.childNodes[0].nodeValue);
@@ -39,6 +39,7 @@ opbuttons.forEach(function (element){
   element.addEventListener('click', function (e){
     console.log(e);
     decimal = false;
+    if(operation == 0 && num1 == 0) num1 = num2;
 
     if(e.target.id == 1) curr = " + ";
     if(e.target.id == 2) curr = " - ";
@@ -67,6 +68,7 @@ function executeOperation(){
 
   num2 = 0;
   flag = false;
+  decimal = false;
 
   update1("              " + num1.toPrecision(10).toString() + curr);
   update2("              0");
@@ -87,22 +89,17 @@ allclear.addEventListener('click', function (e){
 
 clear.addEventListener('click', function (e){
   console.log(e);
-  if(operation == 0){
-    if(decimal) num1 = parseFloat(num1.toString().substring(0,-2));
-    else num1 = Math.trunc(num1/10);
-    update2("              " + num1.toString());
-  }
-  else if (num2 != 0){
+  if(num2 != 0){
     if(decimal) num2 = parseFloat(num2.toString().substring(0,-2));
-    num2 = Math.trunc(num2/10);
-    update2("              " +num1.toString() + curr + num2.toString());
-  }
-  }
+    else num2 = Math.trunc(num2/10);
+    update2("              " + num2.toString());
+  }}
 )
 
 equals.addEventListener('click', function (e){
   console.log(e);
   curr = "";
+  if(operation == 0) num1 = num2;
   executeOperation();
   operation = 0;
   }
@@ -113,10 +110,7 @@ dot.addEventListener('click', function (e){
   if(!decimal) {
     curr = ".";
     decimal = true;
-    num2 = 0;
-    flag = false;
-    update2("              " + num1.toPrecision(10).toString() + curr);
-    operation = 0;
+    update2("              " + num2.toString()+"." );
     flag = true;
   }
   }
