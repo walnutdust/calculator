@@ -1,6 +1,8 @@
 # Calculator
 
-https://walnutdust.github.io/calculator/
+Garett Tok, 2018
+
+Hosted at https://walnutdust.github.io/calculator/
 
 Created as part of The Odin Project's curriculum.
 
